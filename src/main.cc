@@ -53,28 +53,38 @@ struct ReplayPosData {
   int x, y;
   float angle;
 };
+std::string readFileOneLineToString(const std::string&fileName){
+  std::ifstream ifs(fileName);
+  if(ifs){
+   std::string line("");
+   getline(ifs,line);
+   return line; 
+  }else{
+      return "";
+  }
+}
 const std::string &replayPath = "assets/replay.dat";
-const int WINDOW_WIDITH = 640;
-const int WINDOW_HEIGHT = 480;
+const int WINDOW_WIDITH = 1280;
+const int WINDOW_HEIGHT = 800;
 const int SQUARESiIE_X = 100;
 const int SQUARESIZE_Y = 100;
-
+const std::string &imgTxtPath="assets/img.txt";
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                    LPSTR lpCmdLine, int nCmdShow) {
-
   int replayIndex = 0;
   int squareX = (WINDOW_WIDITH - SQUARESiIE_X) / 2;
   int squareY = (WINDOW_HEIGHT - SQUARESIZE_Y) / 2;
   bool isReplaying = false;
   std::vector<ReplayPosData> replayData;
-  SetWindowSize(WINDOW_WIDITH, WINDOW_HEIGHT);
+  SetGraphMode(WINDOW_WIDITH, WINDOW_HEIGHT,32);
   ChangeWindowMode(TRUE);
   SetDrawScreen(DX_SCREEN_BACK);
+  SetUseCharCodeFormat(DX_CHARCODEFORMAT_UTF8);
   if (DxLib_Init() == -1) // ＤＸライブラリ初期化処理
   {
     return -1; // エラーが起きたら直ちに終了
   }
-  Key key;
+  Key key; 
   while (ProcessMessage() == 0) {
     key.update();
     if (key.isKeyPressd(KEY_INPUT_R) == TRUE) {
@@ -115,6 +125,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
         isReplaying = true;
         replayIndex = 0;
       }
+    }else if (key.isKeyPressd(KEY_INPUT_ESCAPE) == TRUE) {
+        replayData.clear();
+        isReplaying = false;
     }
     if (!isReplaying) {
       if (CheckHitKey(KEY_INPUT_UP) == TRUE) {
@@ -141,7 +154,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
       }
     }
     ClearDrawScreen();
-    DrawFormatString(0, 50, GetColor(255, 255, 255), "replay:%d", isReplaying);
+    DrawString(0,0,u8"R:Save ReplayData",GetColor(0,255,255));
+    DrawString(0,20,u8"P:Play ReplayData",GetColor(0,255,255));
+    DrawString(0,40,u8"Escape:Stop ReplayData",GetColor(0,255,255));
+    DrawFormatString(0, 100, GetColor(255, 255, 255), u8"replay:%d", isReplaying);
     DrawBox(squareX, squareY, squareX + SQUARESiIE_X, squareY + SQUARESIZE_Y,
             GetColor(255, 255, 255), TRUE);
     ScreenFlip();
