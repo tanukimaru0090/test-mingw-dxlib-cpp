@@ -1,8 +1,0 @@
-[
-{
-  "directory": "C:/Users/daruma/program/cpp/test-mingw-dxlib/build",
-  "command": "C:\\Users\\daruma\\use-bin\\mingw\\bin\\g++.exe -DDX_GCC_COMPILE -DDX_NON_INLINE_ASM @CMakeFiles/MAIN.dir/includes_CXX.rsp -static -g -Wall -m32 -mwindows -o CMakeFiles\\MAIN.dir\\src\\main.cc.obj -c C:\\Users\\daruma\\program\\cpp\\test-mingw-dxlib\\src\\main.cc",
-  "file": "C:/Users/daruma/program/cpp/test-mingw-dxlib/src/main.cc",
-  "output": "CMakeFiles/MAIN.dir/src/main.cc.obj"
-}
-]
